@@ -1,0 +1,40 @@
+AppBundle\Entity\BookTaglist:
+    type: entity
+    table: book_taglist
+    indexes:
+        IDX_9B5D53764AF2B3F3:
+            columns:
+                - bid
+    uniqueConstraints:
+        bookid:
+            columns:
+                - bid
+                - tag
+    id:
+        tid:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        tag:
+            type: string
+            nullable: false
+            length: 20
+            options:
+                fixed: false
+    manyToOne:
+        bid:
+            targetEntity: BookBook
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                bid:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

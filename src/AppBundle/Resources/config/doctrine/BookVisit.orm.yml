@@ -1,0 +1,31 @@
+AppBundle\Entity\BookVisit:
+    type: entity
+    table: book_visit
+    indexes:
+        IDX_4DBCFC4036BB5955:
+            columns:
+                - bookid
+    uniqueConstraints:
+        unique_bookid:
+            columns:
+                - bookid
+                - visitwhen
+    id:
+        vid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        bookid:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        visitwhen:
+            type: datetime
+            nullable: false
+    lifecycleCallbacks: {  }

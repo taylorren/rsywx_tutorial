@@ -24,7 +24,8 @@
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^3.0"
+        "symfony/phpunit-bridge": "^3.0",
+        "doctrine/doctrine-fixtures-bundle": "^2.3"
     },
     "scripts": {
         "post-install-cmd": [
@@ -47,7 +48,8 @@
     "config": {
         "platform": {
             "php": "5.5.9"
-        }
+        },
+        "secure-http": false
     },
     "extra": {
         "symfony-app-dir": "app",

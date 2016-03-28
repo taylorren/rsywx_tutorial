@@ -1,0 +1,142 @@
+AppBundle\Entity\BookBook:
+    type: entity
+    table: book_book
+    indexes:
+        IDX_D278E839741D53CD:
+            columns:
+                - place
+        IDX_D278E8399CE8D546:
+            columns:
+                - publisher
+    uniqueConstraints:
+        bookid_UNIQUE:
+            columns:
+                - bookid
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        bookid:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+        title:
+            type: string
+            nullable: false
+            length: 200
+            options:
+                fixed: false
+        author:
+            type: string
+            nullable: false
+            length: 200
+            options:
+                fixed: false
+        region:
+            type: string
+            nullable: false
+            length: 40
+            options:
+                fixed: false
+        copyrighter:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+        translated:
+            type: boolean
+            nullable: false
+        purchdate:
+            type: date
+            nullable: false
+        price:
+            type: float
+            nullable: false
+            precision: 22
+            scale: 2
+        pubdate:
+            type: date
+            nullable: false
+        printdate:
+            type: date
+            nullable: false
+        ver:
+            type: string
+            nullable: false
+            length: 5
+            options:
+                fixed: false
+        deco:
+            type: string
+            nullable: false
+            length: 6
+            options:
+                fixed: false
+        kword:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        page:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        isbn:
+            type: string
+            nullable: false
+            length: 17
+            options:
+                fixed: false
+        category:
+            type: string
+            nullable: false
+            length: 12
+            options:
+                fixed: false
+        location:
+            type: string
+            nullable: false
+            length: 2
+            options:
+                fixed: false
+        intro:
+            type: text
+            nullable: false
+            length: null
+            options:
+                fixed: false
+        instock:
+            type: boolean
+            nullable: false
+    manyToOne:
+        place:
+            targetEntity: BookPlace
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                place:
+                    referencedColumnName: id
+            orphanRemoval: false
+        publisher:
+            targetEntity: BookPublisher
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                publisher:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

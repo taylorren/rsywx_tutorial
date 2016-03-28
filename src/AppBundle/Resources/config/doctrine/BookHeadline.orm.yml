@@ -1,0 +1,42 @@
+AppBundle\Entity\BookHeadline:
+    type: entity
+    table: book_headline
+    uniqueConstraints:
+        bid_UNIQUE:
+            columns:
+                - bid
+    id:
+        hid:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        reviewtitle:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+        createAt:
+            type: date
+            nullable: false
+            column: create_at
+        display:
+            type: boolean
+            nullable: false
+    manyToOne:
+        bid:
+            targetEntity: BookBook
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                bid:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

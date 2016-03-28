@@ -1,0 +1,45 @@
+AppBundle\Entity\BookReview:
+    type: entity
+    table: book_review
+    indexes:
+        IDX_50948A4B47653625:
+            columns:
+                - hid
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        title:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+        datein:
+            type: date
+            nullable: false
+        uri:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+            column: URI
+    manyToOne:
+        hid:
+            targetEntity: BookHeadline
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                hid:
+                    referencedColumnName: hid
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
