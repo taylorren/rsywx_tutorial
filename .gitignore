@@ -15,4 +15,4 @@
 /vendor/
 /web/bundles/
 /web/app_dev.php
-/nbproject/
+/nbproject/private/*
