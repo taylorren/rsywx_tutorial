@@ -1,3 +1,59 @@
 home:
     path: /
-    defaults: {_controller: AppBundle:Default:index}
+    defaults: { _controller: AppBundle:Default:index }    
+    
+contact:
+    path: /contact
+    defaults: 
+        _controller: AppBundle:Default:contact
+    
+book_list:
+    path: /books/list/{type}/{key}/{page}
+    defaults:
+        page: 1
+        type: title
+        key: all
+        _controller: AppBundle:Book:list
+
+books_search: 
+  path: /books/search
+  defaults: {_controller: AppBundle:Book:search}
+  requirements: 
+    _method: POST
+
+goto_page: 
+  path: /books/gotopage
+  defaults: {_controller: AppBundle:Book:gotopage}
+  requirements:
+    _method: POST   
+        
+book_detail:
+    path: /books/{id}.html
+    defaults: { _controller: AppBundle:Book:detail }    
+    requirements:
+        id: \d{5}
+    
+lakers: 
+  path: /misc/lakers/{year}
+  defaults: {_controller: AppBundle:Lakers:index}    
+
+cover: 
+  path: /books/cover/{id}_{title}_{author}_{width}.png
+  defaults: {_controller: AppBundle:Default:cover, width: 300}   	
+  requirements:
+      title: .+
+
+tags_add:
+  path: /books/addtag
+  defaults: {_controller: AppBundle:Book:tagsAdd}
+  requirements: 
+    _method: POST   
+
+reading_list:
+  path: /books/readings/{page}
+  defaults: {_controller: AppBundle:Reading:list, page:1} 
+
+admin:
+    path: /admin
+    defaults: {_controller:AppBundle:Admin:index}    
+ 
