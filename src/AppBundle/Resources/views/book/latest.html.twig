@@ -1,0 +1,17 @@
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h1>{{book.title}}</h1>
+                <p>作者：{{book.author}}（{{book.region}}）</p>
+                <p>收录时间：{{book.purchdate|date('Y年m月d日')}}</p>
+                <p>版次：{{book.ver}}</p>
+                <p><a class="btn btn-primary btn-lg" href="{{path('book_detail', {'id':book.bookid})}}" role="button">浏览本书 &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <img src="/covers/default.jpg" title="{{book.author}} - {{book.title}}"/>
+            </div>
+        </div>
+    </div>
+</div>
+

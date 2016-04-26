@@ -6,20 +6,22 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller
+class BookController extends Controller
 {
     /**
      * Test changes in Linux
      */
-    public function indexAction(Request $request)
+    public function searchAction(Request $request)
     {
         // replace this example code with whatever you need
-        return $this->render('AppBundle:default:index.html.twig');
+        dump($request);
+        die();
     }
     
-    public function latestBook()
+    public function latestAction()
     {
-        
+        $b= json_decode(file_get_contents('http://api/book/latestBook'));
+     
+        return $this->render("AppBundle:book:latest.html.twig", ['book' => $b->out[0]]);
     }
-            
 }
