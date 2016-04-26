@@ -14,4 +14,10 @@ class ReadingController extends Controller
         
         return $this->render("AppBundle:reading:summary.html.twig", ['rs' => $summary->out]);
     }
+    public function relatedReviewAction($id)
+    {
+        $r    = json_decode(file_get_contents("http://api/reading/relatedReview/$id"))->out;
+
+        return $this->render("AppBundle:reading:related.html.twig", ['rs' => $r]);
+    }
 }

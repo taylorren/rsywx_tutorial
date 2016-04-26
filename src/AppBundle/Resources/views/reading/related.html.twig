@@ -1,0 +1,7 @@
+<table class="table table-hover table-striped">
+    {% for r in rs %}
+        <tr>
+            <td><a href="{{r.URI}}">{{r.title}}</a>，发表于{{r.datein|date("Y-m-d")}}</td>
+        </tr>
+    {% endfor %}
+</table>

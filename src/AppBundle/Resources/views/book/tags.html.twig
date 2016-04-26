@@ -1,0 +1,3 @@
+{% for tag in tags %}
+<a href="{{path('book_list', {'type':'tag', 'page':1, 'key':tag.tag})}}">{{tag.tag}}</a>
+{% endfor %}

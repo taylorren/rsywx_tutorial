@@ -1,0 +1,163 @@
+{% set active=2 %}
+{% extends 'AppBundle:default:layout.html.twig' %} 
+{% block meta %}
+    <meta name="description" content="任氏有无轩书籍详情。{{book.author}}的{{book.title}}，出版社：{{book.pname}}">
+    <meta name="keyword" content="任氏有无轩,书籍,详情,{{book.author}},{{book.title}},{{book.pname}}">
+{% endblock %}
+{% block title %}任氏有无轩 | 书籍详情 | {{book.title}}{% endblock %}
+
+
+{% set author=book.author %}
+{% if author ==''%}
+    {% set author='（未署名）'%}
+{% endif %}
+{% block header %}
+    书籍详情
+{% endblock %}
+{% block content %}
+    <div class="widewrapper">
+        <div class="container content">
+            <div class="row">
+                <div class="col-sm-6">
+                    <img src="{{path("cover", {'id':book.bookid, 'author':author, 'title':book.title}) }}" alt="{{book.title}} {{book.author}}" title="{{book.title}} {{book.author}}"/>
+                </div>
+
+                <div class="col-sm-6">
+                    <h1>{{book.title}}</h1>
+                    <p><strong>ISBN：</strong>{{book.isbn}}<br/>
+                        <strong>作者：</strong>{{author}}（{{book.region}}）{% if book.translated%} | 译者：{{book.copyrighter}}{% endif%}<br/>
+                        <strong>价格：</strong>RMB {{book.price|number_format(2,'.',',')}}<br/>
+                        <strong>购于：</strong>{{book.purchdate|date('Y/m/d')}}，{{book.plname}}<br/>
+                    </p>
+                    <div class="feature">
+                        <div class="icon">
+                            <i class="glyphicons tags"></i>
+                        </div>
+                        <div class="text">
+                            <h3>TAG</h3>
+                            <small>{{ render (controller('AppBundle:Book:tagsbyid', {"id":book.id})) }}</small>
+                            <a class="btn btn-info btn-sm" data-toggle="modal" href="#addtag" >增加更多TAG »</a><br/>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="icon">
+                            <i class="glyphicons tags"></i>
+                        </div>
+                        <div class="text">
+                            <h3>豆瓣TAG</h3>
+                            <small>{% include 'AppBundle:book:DoubanTags.html.twig' with {'tags':douban.tags} %}</small>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="icon">
+                            <i class="glyphicons star"></i>
+                        </div>
+                        <div class="text">
+                            <h3>豆瓣评分</h3>
+                            <small>{{douban.rating}}</small>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="icon">
+                            <i class="glyphicons screenshot"></i>
+                        </div>
+                        <div class="text">
+                            <h3>浏览次数</h3>
+                            <small><strong>{{vc}}</strong>（上次访问时间是{{lvt}}）</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h3>简介：</h3>
+                    <p>{% if book.intro is empty %}任氏有无轩主人对本书暂无介绍。{% else %}{{ book.intro}}{% endif %}
+                    </p>
+                    <h3>任氏有无轩主人评论：</h3>
+                    <p>{{ render(controller('AppBundle:Reading:relatedReview', {'id':book.id})) }}</p>
+                    <h3>豆瓣简介：</h3>
+                    <p>{{douban.summary|nl2br}}</p>
+                    <p>更多信息参见：{% if douban.alternate=="（豆瓣找不到）" %}{{douban.alternate}}{%else%}<a href="{{douban.alternate}}">豆瓣链接</a>。{%endif%}</p>
+                    <h3>更多书籍信息</h3>
+
+
+                    <table class="table table-hover table-striped">
+
+                        <tbody>
+                            <tr>
+                                <td>出版社：</td>
+                                <td>{{book.pname}}</td>
+                            </tr>
+                            <tr>
+                                <td>出版日期：</td>
+                                <td>{{book.pubdate|date('Y/m/d')}}</td>
+                            </tr>
+                            <tr>
+                                <td>印刷日期：</td>
+                                <td>{{book.printdate|date('Y/m/d')}}</td>
+                            </tr>
+                            <tr>
+                                <td>版次：</td>
+                                <td>{{book.ver}}</td>
+                            </tr>
+                            <tr>
+                                <td>装帧：</td>
+                                <td>{{book.deco}}</td>
+                            </tr>
+                            <tr>
+                                <td>千字数：</td>
+                                <td>{{book.kword|number_format(0,'.',',')}}</td>
+                            </tr>
+                            <tr>
+                                <td>页数：</td>
+                                <td>{{book.page}}</td>
+                            </tr>
+                            <tr>
+                                <td>分类号：</td>
+                                <td>{{book.category}}</td>
+                            </tr>
+                            <tr>
+                                <td>藏书位置：</td>
+                                <td>{{book.location}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+    </div>  
+    <!-- The modal dialog to add more tags -->
+    <div>
+        <div class="modal fade" id="addtag">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">增加自己的TAG</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form role="form" method="post" action="{{path('tags_add')}}"  id='tagform' name='tagform'>
+                            <div class="row">
+                                <div class="col-sm-4 form-group">
+                                    <label class="control-label" for="newtags">新增TAG</label>
+                                    <input type="text" class="input-xlarge" id="newtags" name="newtags" />
+                                    <p class="help-block">（用空格分隔）</p>
+                                    <input type="hidden" value="{{book.id}}" id="id" name="id"/>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#" class="btn" data-dismiss="modal">取消</a>
+                                <button type="submit" class="btn btn-primary">保存</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Example row of columns -->
+    </div>
+
+{% endblock %}
