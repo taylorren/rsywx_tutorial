@@ -1,0 +1,3 @@
+<p>截止{{'today'|date('Y年m月d日')}}，任氏有无轩藏书{{summary.summary.0.bc|number_format(0,'.',',')}}本。约{{summary.summary.0.wc|number_format(0,'.',',')}}千字，{{summary.summary.0.pc|number_format(0,'.',',')}}页。</p>
+<p>
+    最近（{{summary.last.0.purchdate|date('Y年m月d日')}}）收藏/整理的书籍是<strong>{{summary.last.0.author}}</strong>的<strong><a href="{{path('book_detail', {'id':summary.last.0.bookid})}}">《{{summary.last.0.title}}》</a></strong>。</p>

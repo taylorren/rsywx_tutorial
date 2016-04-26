@@ -24,4 +24,10 @@ class BookController extends Controller
      
         return $this->render("AppBundle:book:latest.html.twig", ['book' => $b->out[0]]);
     }
+    
+    public function summaryAction()
+    {
+        $summary = json_decode(file_get_contents('http://api/book/summary'))->out;
+        return $this->render("AppBundle:book:summary.html.twig", ['summary' => $summary]);
+    }
 }

@@ -13,13 +13,22 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $posts=$this->getRecentPosts();
+        $wp=array_shift($posts);
+        
         // replace this example code with whatever you need
-        return $this->render('AppBundle:default:index.html.twig');
+        return $this->render('AppBundle:default:index.html.twig', ['wp'=>$wp]);
     }
     
     public function latestBook()
     {
         
+    }
+    
+    private function getRecentPosts($num=4)
+    {
+        $res=  json_decode(file_get_contents("http://api/wordpress/recentPosts/". htmlspecialchars($num)));
+        return $res->out;
     }
             
 }
