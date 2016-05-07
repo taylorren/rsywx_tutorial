@@ -16,3 +16,4 @@
 /web/bundles/
 /web/app_dev.php
 /nbproject/private/*
+*.ttf
