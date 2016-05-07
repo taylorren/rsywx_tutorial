@@ -1,0 +1,85 @@
+{% set active=2 %}
+{% extends 'AppBundle:default:layout.html.twig' %} 
+{% block meta %}
+    <meta name="description" content="任氏有无轩书籍列表，第{{cur}}页，总{{total}}页。">
+    <meta name="keyword" content="任氏有无轩,列表,索引">
+{% endblock %}
+
+{% block title %}任氏有无轩 | 藏书列表 | 第{{cur}}页，总{{total}}页{% endblock %}
+
+{% block content %}
+    <div class="widewrapper">
+        <div class="container content">
+            <div class="row">
+                <section id="searchform" class="col-md-6">
+                    <form action="{{path('books_search')}}" method="post" accept-charset="utf-8" class="form-inline">
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <input class="form-control input-sm" type="text" id="key" name="key" {% if key=="all" %}placeholder{%else%}value{%endif%}="{{key}}">
+                                <button type="submit" class="btn btn-grove-one btn-sm btn-bold">搜索</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+                <section id="gotoform" class="col-md-6">
+                    <form action="{{path('goto_page')}}" method="post" accept-charset="utf-8" class="clearfix">
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <input class="form-control input-sm" type="text" id="page" name="page" placeholder="直接去第几页">
+                                <input type="hidden" name="current" id="current" value="{{cur}}"/>
+                                <button type="submit" class="btn btn-grove-one btn-sm btn-bold">直接去</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>               
+            </div>
+            <div class="row">
+                <section id="data" class="col-md-12">
+                    <table class="table table-striped table-hover">
+                        <tbody>
+                            <tr>
+                                <th><strong>编号</strong></th>
+                                <th><strong>书名</strong></th>
+                                <th><strong>作者</strong></th>
+                                <th><strong>购买/整理日期</strong></th>
+                                <th><strong>位置</strong></th>
+                            </tr>
+                            {% for book in res %}
+                                {% set author=book.author%}
+                                {% if author ==''%}
+                                    {% set author='（未署名）'%}
+                                {% else %}
+                                    {% set author="【"~book.region~"】"~book.author %}
+                                {% endif%}
+                                <tr>
+                                    <td><a href="{{path('book_detail', {'id':book.bookid})}}">{{book.bookid}}</a></td>
+                                    <td><a href="{{path('book_detail', {'id':book.bookid})}}">{{book.title}}</a></td>
+                                    <td>{{author}}</td>
+                                    <td>{{book.purchdate|date('Y年m月d日')}}</td>
+                                    <td>{{book.location}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                </section>
+
+                <section id="pagination" class="col-md-12">
+                    <a href="{{path('book_list', {'page':1, 'key':key, 'type':type})}}" title="首页"><i class="glyphicon glyphicon-fast-backward"></i></a>
+                        {% if cur==1 %}
+                        <a class="disabled" title="上一页"><i class="glyphicon glyphicon-backward"></i></a>
+                        {% else %}
+                        <a href="{{path('book_list', {'page':cur-1, 'key':key, 'type':type})}}" title="上一页"><i class="glyphicon glyphicon-backward"></i></a>
+                        {% endif %}
+                        {% if cur==total %}
+                        <a class="disabled" title="下一页"><i class="glyphicons forward"></i></a>
+                        {% else %}
+                        <a href="{{path('book_list', {'page':cur+1, 'key': key, 'type':type})}}" title="下一页"><i class="glyphicon glyphicon-forward"></i></a>
+                        {% endif %}
+                    <a href="{{path('book_list', {'page':total, 'key':key, 'type':type})}}" title="末页"><i class="glyphicon glyphicon-fast-forward"></i></a>
+                </section>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -12,11 +12,15 @@ class BookController extends Controller
     /**
      * Test changes in Linux
      */
-    public function searchAction(Request $request)
+    public function searchAction(Request $req)
     {
-        // replace this example code with whatever you need
-        dump($request);
-        die();
+        $q = $req->request->all();
+
+        $page = 1;
+        $key  = $q['key'];
+
+        $uri = $this->get('router')->generate('book_list', array('page' => $page, 'key' => $key, 'type' => 'title'));
+        return $this->redirect($uri);
     }
 
     public function latestAction()
@@ -130,6 +134,22 @@ class BookController extends Controller
             $ret[] = $value->tag;
         }
         return $ret;
+    }
+    
+    public function listAction($page, $key, $type)
+    {
+        $uri="http://api/books/list/$type/$key/$page";
+        $out=  json_decode(file_get_contents($uri))->out;
+        
+        $res=$out->books;
+        $totalcount=$out->count->bc;
+        
+        $rpp=$this->container->getParameter('books_per_page');
+
+        $paginator = new \lib\Paginator($page, $totalcount, $rpp);
+        $pagelist  = $paginator->getPagesList();
+
+        return $this->render("AppBundle:book:list.html.twig", array('res' => $res, 'paginator' => $pagelist, 'cur' => $page, 'total' => $paginator->getTotalPages(), 'key' => $key, 'type' => $type));
     }
 
 }

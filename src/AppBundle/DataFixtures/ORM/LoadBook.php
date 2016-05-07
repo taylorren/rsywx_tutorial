@@ -14,7 +14,7 @@ class LoadBookData extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         //Now we create a 100 general book
-        for ($i = 1; $i <= 100; $i++)
+        for ($i = 10000; $i <= 10099; $i++)
         {
             $p = new BookBook();
             $p->setAuthor('Normal');
